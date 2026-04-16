@@ -1,4 +1,3 @@
-# outputs.tf
 output "db_endpoint" {
   value       = aws_db_instance.nextcloud.address
   description = "Hostname RDS (sans le port)"
