@@ -30,7 +30,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "primary" {
 }
 
 resource "aws_s3_bucket_public_access_block" "primary" {
-  bucket = aws_s3_bucket.primary.id
+  bucket                  = aws_s3_bucket.primary.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -59,8 +59,8 @@ data "aws_iam_policy_document" "primary_deny_insecure" {
 }
 
 resource "aws_s3_bucket_policy" "primary" {
-  bucket = aws_s3_bucket.primary.id
-  policy = data.aws_iam_policy_document.primary_deny_insecure.json
+  bucket     = aws_s3_bucket.primary.id
+  policy     = data.aws_iam_policy_document.primary_deny_insecure.json
   depends_on = [aws_s3_bucket_public_access_block.primary]
 }
 
@@ -92,7 +92,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
 }
 
 resource "aws_s3_bucket_public_access_block" "logs" {
-  bucket = aws_s3_bucket.logs.id
+  bucket                  = aws_s3_bucket.logs.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -134,8 +134,8 @@ data "aws_iam_policy_document" "logs" {
 }
 
 resource "aws_s3_bucket_policy" "logs" {
-  bucket = aws_s3_bucket.logs.id
-  policy = data.aws_iam_policy_document.logs.json
+  bucket     = aws_s3_bucket.logs.id
+  policy     = data.aws_iam_policy_document.logs.json
   depends_on = [aws_s3_bucket_public_access_block.logs]
 }
 

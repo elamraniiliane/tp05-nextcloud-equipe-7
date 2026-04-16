@@ -1,3 +1,4 @@
+# tflint-ignore: terraform_unused_declarations
 variable "vpc_id" {
   description = "ID du VPC (output du module networking)."
   type        = string

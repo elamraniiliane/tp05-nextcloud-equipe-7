@@ -1,17 +1,19 @@
-# Module `data`
+# Module data
 
-Couche persistance : RDS PostgreSQL + 2 buckets S3.
+RDS PostgreSQL 16 Multi-AZ + 2 buckets S3 (primary + logs ALB).
 
-Créé par le **Rôle 4 — Data Engineer** lors du TP05.
+## Usage
 
-## Contenu attendu
+```hcl
+module "data" {
+  source = "../../modules/data"
 
-- RDS PostgreSQL 16.4 Multi-AZ, chiffré KMS, db.t3.micro
-- Bucket S3 `primary` : stockage fichiers Nextcloud (versioning + SSE-KMS)
-- Bucket S3 `logs` : access logs ALB (SSE-AES256 — ALB ne supporte pas KMS ici), lifecycle Glacier/expiration
+  project_name = "kolab"
+  environment  = "dev"
 
-## Interface
-
-Voir `variables.tf` et `outputs.tf`.
-
-Consultez [role-4-data.md](../../../cours/jour5/tp05-team-nextcloud/role-4-data.md) pour le détail.
+  vpc_id                 = module.networking.vpc_id
+  private_db_subnet_ids  = module.networking.private_db_subnet_ids
+  db_security_group_id   = module.security.db_security_group_id
+  kms_key_arn            = module.security.kms_key_arn
+  db_password_secret_arn = module.security.db_password_secret_arn
+}
